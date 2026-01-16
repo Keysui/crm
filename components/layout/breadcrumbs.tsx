@@ -29,10 +29,13 @@ export function Breadcrumbs() {
 
   return (
     <Breadcrumb>
-      <BreadcrumbList>
+      <BreadcrumbList className="items-center">
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href="/dashboard" className="flex items-center gap-1">
+            <Link
+              href="/dashboard"
+              className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors duration-200"
+            >
               <Home className="h-4 w-4" />
             </Link>
           </BreadcrumbLink>
@@ -44,13 +47,20 @@ export function Breadcrumbs() {
 
           return (
             <div key={path} className="flex items-center">
-              <BreadcrumbSeparator />
+              <BreadcrumbSeparator className="text-muted-foreground/40" />
               <BreadcrumbItem>
                 {isLast ? (
-                  <BreadcrumbPage>{name}</BreadcrumbPage>
+                  <BreadcrumbPage className="font-semibold text-foreground">
+                    {name}
+                  </BreadcrumbPage>
                 ) : (
                   <BreadcrumbLink asChild>
-                    <Link href={href}>{name}</Link>
+                    <Link
+                      href={href}
+                      className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+                    >
+                      {name}
+                    </Link>
                   </BreadcrumbLink>
                 )}
               </BreadcrumbItem>

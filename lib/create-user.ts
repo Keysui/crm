@@ -19,6 +19,18 @@ async function main() {
     const hasSupabaseKey = envContent.includes("SUPABASE_SERVICE_ROLE_KEY")
     console.log("SUPABASE_URL in .env:", hasSupabaseUrl ? "✅ Yes" : "❌ No")
     console.log("SUPABASE_SERVICE_ROLE_KEY in .env:", hasSupabaseKey ? "✅ Yes" : "❌ No")
+    
+    // Show actual values from file (for debugging)
+    const urlMatch = envContent.match(/^SUPABASE_URL=(.+)$/m)
+    const keyMatch = envContent.match(/^SUPABASE_SERVICE_ROLE_KEY=(.+)$/m)
+    if (urlMatch) {
+      const urlValue = urlMatch[1].trim()
+      console.log("  SUPABASE_URL value from file:", urlValue ? `"${urlValue.substring(0, 30)}..."` : "(empty)")
+    }
+    if (keyMatch) {
+      const keyValue = keyMatch[1].trim()
+      console.log("  SUPABASE_SERVICE_ROLE_KEY value from file:", keyValue ? `"${keyValue.substring(0, 20)}..." (length: ${keyValue.length})` : "(empty)")
+    }
   }
   
   console.log("\nChecking environment variables after dotenv load...")
@@ -96,7 +108,6 @@ async function main() {
           password: hashedPassword,
           business_name: "ScaleMako",
           role: "admin",
-          email_verified: true,
           failed_login_count: 0,
           lock_until: null,
         })
@@ -120,7 +131,6 @@ async function main() {
           password: hashedPassword,
           business_name: "ScaleMako",
           role: "admin",
-          email_verified: true,
           failed_login_count: 0,
           lock_until: null,
         })
