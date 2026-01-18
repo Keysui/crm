@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button"
 import {
   Sheet,
   SheetContent,
+  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
 
@@ -29,12 +30,12 @@ const navigation = [
 
 const SidebarContent = ({ pathname }: { pathname: string }) => (
   <>
-    <div className="flex h-16 items-center border-b border-gray-200 px-6 bg-white">
-      <h2 className="text-lg font-bold tracking-tight font-display gradient-text">
+    <div className="flex h-16 items-center border-b border-gray-200/80 px-6 bg-white">
+      <h2 className="text-lg font-bold tracking-tight font-display gradient-text leading-tight">
         ScaleMako CRM
       </h2>
     </div>
-    <nav className="flex-1 space-y-1.5 px-3 py-4">
+    <nav className="flex-1 space-y-1 px-3 py-4">
       {navigation.map((item) => {
         const isActive = pathname === item.href
         return (
@@ -45,21 +46,21 @@ const SidebarContent = ({ pathname }: { pathname: string }) => (
               "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 relative",
               isActive
                 ? "bg-gradient-to-r from-[#00C6FF] to-[#0072FF] text-white shadow-md shadow-[#00C6FF]/20"
-                : "text-[#4b5563] hover:bg-[#f9fafb] hover:text-[#1f2937]"
+                : "text-[#6b7280] hover:bg-[#f9fafb] hover:text-[#1f2937]"
             )}
           >
             {isActive && (
-              <div className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 rounded-r-full bg-white/30" />
+              <div className="absolute left-0 top-1/2 -translate-y-1/2 h-7 w-0.5 rounded-r-full bg-white/40" />
             )}
             <item.icon
               className={cn(
-                "h-5 w-5 transition-transform duration-200",
+                "h-4.5 w-4.5 transition-all duration-200 shrink-0",
                 isActive
-                  ? "text-white"
-                  : "text-[#9ca3af] group-hover:text-[#1f2937]"
+                  ? "text-white stroke-[2.5]"
+                  : "text-[#9ca3af] group-hover:text-[#1f2937] stroke-[2.5]"
               )}
             />
-            <span className="relative z-10">{item.name}</span>
+            <span className="relative z-10 leading-tight">{item.name}</span>
           </Link>
         )
       })}
@@ -97,6 +98,7 @@ export function Sidebar() {
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-64 p-0">
+              <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
               <SidebarContent pathname={pathname} />
             </SheetContent>
           </Sheet>

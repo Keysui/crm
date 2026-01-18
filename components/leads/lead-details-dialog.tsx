@@ -47,42 +47,42 @@ export function LeadDetailsDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>{lead.name}</DialogTitle>
-          <DialogDescription>
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl border border-gray-200/80 shadow-xl">
+        <DialogHeader className="pb-4 border-b border-gray-200/50">
+          <DialogTitle className="text-xl font-semibold text-[#111827] leading-tight">{lead.name}</DialogTitle>
+          <DialogDescription className="text-xs text-[#6b7280] leading-relaxed mt-1.5">
             Lead details and conversation summary
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-6">
+        <div className="space-y-6 pt-6">
           {/* Lead Information */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="text-sm font-medium text-muted-foreground">Phone</p>
-              <p className="text-sm">{lead.phone}</p>
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-1.5">
+              <p className="text-[11px] font-semibold text-[#6b7280] uppercase tracking-wide">Phone</p>
+              <p className="text-sm font-medium text-[#111827] font-mono">{lead.phone}</p>
             </div>
-            <div>
-              <p className="text-sm font-medium text-muted-foreground">Status</p>
-              <p className="text-sm capitalize">{lead.status}</p>
+            <div className="space-y-1.5">
+              <p className="text-[11px] font-semibold text-[#6b7280] uppercase tracking-wide">Status</p>
+              <p className="text-sm font-medium text-[#111827] capitalize">{lead.status}</p>
             </div>
-            <div>
-              <p className="text-sm font-medium text-muted-foreground">Source</p>
-              <p className="text-sm">{lead.source}</p>
+            <div className="space-y-1.5">
+              <p className="text-[11px] font-semibold text-[#6b7280] uppercase tracking-wide">Source</p>
+              <p className="text-sm font-medium text-[#111827]">{lead.source}</p>
             </div>
-            <div>
-              <p className="text-sm font-medium text-muted-foreground">Date</p>
-              <p className="text-sm">{lead.date}</p>
+            <div className="space-y-1.5">
+              <p className="text-[11px] font-semibold text-[#6b7280] uppercase tracking-wide">Date</p>
+              <p className="text-sm font-medium text-[#111827] font-mono">{lead.date}</p>
             </div>
           </div>
 
-          <Separator />
+          <Separator className="bg-gray-200/50" />
 
           {/* AI Summary */}
-          <div>
-            <h3 className="text-sm font-semibold mb-2">AI Summary</h3>
-            <div className="bg-muted rounded-lg p-4">
-              <p className="text-sm leading-relaxed">
+          <div className="space-y-3">
+            <h3 className="text-sm font-semibold text-[#111827] leading-tight">AI Summary</h3>
+            <div className="bg-[#f9fafb] rounded-xl border border-gray-200/50 p-4">
+              <p className="text-sm leading-relaxed text-[#374151]">
                 {lead.aiSummary || lead.summary || "No summary available for this lead."}
               </p>
             </div>
@@ -91,16 +91,16 @@ export function LeadDetailsDialog({
           {/* Audio Player (if Voice Call) */}
           {lead.source === "Voice" && (lead.recordingUrl || lead.recording_url) && (
             <>
-              <Separator />
-              <div>
-                <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
-                  <Phone className="h-4 w-4" />
+              <Separator className="bg-gray-200/50" />
+              <div className="space-y-3">
+                <h3 className="text-sm font-semibold text-[#111827] leading-tight flex items-center gap-2">
+                  <Phone className="h-4 w-4 text-[#6b7280] stroke-[2]" />
                   Call Recording
                 </h3>
-                <div className="bg-muted rounded-lg p-4">
+                <div className="bg-[#f9fafb] rounded-xl border border-gray-200/50 p-4 space-y-3">
                   <audio
                     controls
-                    className="w-full mb-3"
+                    className="w-full"
                     src={lead.recordingUrl || lead.recording_url}
                   >
                     Your browser does not support the audio element.
@@ -110,8 +110,9 @@ export function LeadDetailsDialog({
                       variant="outline"
                       size="sm"
                       onClick={() => window.open(lead.recordingUrl || lead.recording_url, "_blank")}
+                      className="h-8 px-3 text-xs font-medium text-[#6b7280] hover:text-[#111827] hover:bg-[#f3f4f6] border-gray-200/80"
                     >
-                      <ExternalLink className="h-3 w-3 mr-1" />
+                      <ExternalLink className="h-3.5 w-3.5 mr-1.5 stroke-[2]" />
                       Open in new tab
                     </Button>
                     <Button
@@ -123,8 +124,9 @@ export function LeadDetailsDialog({
                         link.download = `call-recording-${lead.name}-${lead.id}.mp3`
                         link.click()
                       }}
+                      className="h-8 px-3 text-xs font-medium text-[#6b7280] hover:text-[#111827] hover:bg-[#f3f4f6] border-gray-200/80"
                     >
-                      <Download className="h-3 w-3 mr-1" />
+                      <Download className="h-3.5 w-3.5 mr-1.5 stroke-[2]" />
                       Download
                     </Button>
                   </div>
@@ -133,12 +135,15 @@ export function LeadDetailsDialog({
             </>
           )}
 
-          <Separator />
+          <Separator className="bg-gray-200/50" />
 
           {/* Export to HubSpot */}
-          <div className="flex justify-end">
-            <Button onClick={handleExportToHubSpot}>
-              <Upload className="h-4 w-4 mr-2" />
+          <div className="flex justify-end pt-2">
+            <Button 
+              onClick={handleExportToHubSpot}
+              className="btn-gradient text-white border-0 shadow-sm hover:shadow-md h-9 px-4 text-sm font-semibold"
+            >
+              <Upload className="h-4 w-4 mr-2 stroke-[2]" />
               Export to HubSpot
             </Button>
           </div>

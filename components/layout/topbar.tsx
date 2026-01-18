@@ -46,55 +46,55 @@ export function Topbar() {
   }
 
   return (
-    <div className="flex h-16 items-center justify-between border-b border-gray-200 bg-white px-4 lg:px-6 sticky top-0 z-40 shadow-sm">
-      <div className="flex items-center gap-4">
+    <div className="flex h-16 items-center justify-between border-b border-gray-200/80 bg-white/95 backdrop-blur-sm px-4 lg:px-6 sticky top-0 z-40 shadow-sm">
+      <div className="flex items-center gap-4 min-w-0">
         <Breadcrumbs />
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3 shrink-0">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
-              className="relative h-10 w-10 rounded-full hover:bg-accent transition-all duration-200 hover:scale-105"
+              className="relative h-9 w-9 rounded-full hover:bg-[#f9fafb] transition-all duration-200 p-0"
             >
-              <Avatar className="h-10 w-10 ring-2 ring-background hover:ring-primary/20 transition-all duration-200">
-                <AvatarFallback className="bg-gradient-to-br from-primary to-primary/60 text-primary-foreground font-semibold">
+              <Avatar className="h-9 w-9 ring-2 ring-gray-200/80 hover:ring-[#00C6FF]/30 transition-all duration-200">
+                <AvatarFallback className="bg-gradient-to-br from-[#00C6FF] to-[#0072FF] text-white font-semibold text-sm">
                   {user?.email?.[0]?.toUpperCase() || "U"}
                 </AvatarFallback>
               </Avatar>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-56 border-0 shadow-xl bg-popover/95 backdrop-blur-xl"
+            className="w-56 border border-gray-200/80 shadow-lg bg-white/98 backdrop-blur-xl rounded-xl"
             align="end"
             forceMount
           >
-            <DropdownMenuLabel className="font-normal px-3 py-2.5">
-              <div className="flex flex-col space-y-1">
-                <p className="text-sm font-semibold leading-none">
+            <DropdownMenuLabel className="font-normal px-3.5 py-3">
+              <div className="flex flex-col space-y-0.5">
+                <p className="text-sm font-semibold leading-tight text-[#1f2937]">
                   {user?.businessName || "User"}
                 </p>
-                <p className="text-xs leading-none text-muted-foreground">
+                <p className="text-xs leading-tight text-[#6b7280]">
                   {user?.email || "user@example.com"}
                 </p>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator className="bg-border/50" />
-            <DropdownMenuItem className="cursor-pointer transition-colors">
-              <User className="mr-2 h-4 w-4" />
-              <span>Profile</span>
+            <DropdownMenuSeparator className="bg-gray-200/80" />
+            <DropdownMenuItem className="cursor-pointer transition-colors px-3.5 py-2.5">
+              <User className="mr-2.5 h-4 w-4 text-[#6b7280] stroke-[2.5]" />
+              <span className="text-sm">Profile</span>
             </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer transition-colors">
-              <Settings className="mr-2 h-4 w-4" />
-              <span>Settings</span>
+            <DropdownMenuItem className="cursor-pointer transition-colors px-3.5 py-2.5">
+              <Settings className="mr-2.5 h-4 w-4 text-[#6b7280] stroke-[2.5]" />
+              <span className="text-sm">Settings</span>
             </DropdownMenuItem>
-            <DropdownMenuSeparator className="bg-border/50" />
+            <DropdownMenuSeparator className="bg-gray-200/80" />
             <DropdownMenuItem
               onClick={handleLogout}
-              className="cursor-pointer text-destructive focus:text-destructive transition-colors"
+              className="cursor-pointer text-[#ef4444] focus:text-[#dc2626] transition-colors px-3.5 py-2.5"
             >
-              <LogOut className="mr-2 h-4 w-4" />
-              <span>Log out</span>
+              <LogOut className="mr-2.5 h-4 w-4 stroke-[2.5]" />
+              <span className="text-sm">Log out</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

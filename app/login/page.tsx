@@ -93,36 +93,36 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#f9fafb] via-white to-[#f3f4f6] px-4 py-12">
       <div className="w-full max-w-md animate-fade-in">
-        <Card className="border border-gray-200 shadow-2xl bg-white hover-lift">
-          <CardHeader className="space-y-3 pb-8">
-            <div className="flex flex-col items-center space-y-2">
-              <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-[#00C6FF] to-[#0072FF] flex items-center justify-center mb-2 shadow-lg">
+        <Card className="border border-gray-200/80 shadow-xl bg-white/95 backdrop-blur-sm">
+          <CardHeader className="space-y-4 pb-8 pt-8 px-8">
+            <div className="flex flex-col items-center space-y-3">
+              <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-[#00C6FF] to-[#0072FF] flex items-center justify-center shadow-md">
                 <svg
-                  className="h-6 w-6 text-white"
+                  className="h-7 w-7 text-white"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
+                  strokeWidth={2.5}
                 >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth={2}
                     d="M13 10V3L4 14h7v7l9-11h-7z"
                   />
                 </svg>
               </div>
-              <CardTitle className="text-3xl font-bold tracking-tight text-center font-display text-[#1f2937]">
+              <CardTitle className="text-3xl font-bold tracking-tight text-center font-display text-[#1f2937] leading-tight">
                 Welcome back
               </CardTitle>
-              <CardDescription className="text-center text-base text-[#4b5563]">
+              <CardDescription className="text-center text-sm text-[#6b7280] leading-relaxed">
                 Sign in to continue to your CRM dashboard
               </CardDescription>
             </div>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-5 px-8 pb-8">
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm font-medium">
+                <Label htmlFor="email" className="text-sm font-semibold text-[#1f2937]">
                   Email address
                 </Label>
                 <Input
@@ -134,12 +134,12 @@ export default function LoginPage() {
                   disabled={loading}
                   aria-invalid={errors.email ? "true" : "false"}
                   aria-describedby={errors.email ? "email-error" : undefined}
-                  className="h-11 transition-all duration-200 focus:ring-2 focus:ring-primary/20"
+                  className="h-11 transition-all duration-200 focus:ring-2 focus:ring-[#00C6FF]/20 border-gray-200/80"
                 />
                 {errors.email && (
                   <p
                     id="email-error"
-                    className="text-sm text-destructive animate-in fade-in slide-in-from-top-1"
+                    className="text-xs text-[#ef4444] animate-in fade-in slide-in-from-top-1 leading-tight mt-1"
                   >
                     {errors.email}
                   </p>
@@ -147,7 +147,7 @@ export default function LoginPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-sm font-medium">
+                <Label htmlFor="password" className="text-sm font-semibold text-[#1f2937]">
                   Password
                 </Label>
                 <Input
@@ -159,20 +159,20 @@ export default function LoginPage() {
                   disabled={loading}
                   aria-invalid={errors.password ? "true" : "false"}
                   aria-describedby={errors.password ? "password-error" : undefined}
-                  className="h-11 transition-all duration-200 focus:ring-2 focus:ring-primary/20"
+                  className="h-11 transition-all duration-200 focus:ring-2 focus:ring-[#00C6FF]/20 border-gray-200/80"
                 />
                 {errors.password && (
                   <p
                     id="password-error"
-                    className="text-sm text-destructive animate-in fade-in slide-in-from-top-1"
+                    className="text-xs text-[#ef4444] animate-in fade-in slide-in-from-top-1 leading-tight mt-1"
                   >
                     {errors.password}
                   </p>
                 )}
               </div>
 
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
+              <div className="flex items-center">
+                <div className="flex items-center space-x-2.5">
                   <Checkbox
                     id="remember"
                     checked={rememberMe}
@@ -184,7 +184,7 @@ export default function LoginPage() {
                   />
                   <Label
                     htmlFor="remember"
-                    className="text-sm font-normal cursor-pointer text-muted-foreground hover:text-foreground transition-colors"
+                    className="text-sm font-normal cursor-pointer text-[#6b7280] hover:text-[#1f2937] transition-colors leading-tight"
                   >
                     Remember me
                   </Label>
@@ -193,7 +193,7 @@ export default function LoginPage() {
 
               <Button
                 type="submit"
-                className="w-full h-11 text-base font-semibold btn-gradient text-white shadow-lg hover:shadow-xl transition-all duration-200"
+                className="w-full h-11 text-sm font-semibold btn-gradient text-white shadow-md hover:shadow-lg transition-all duration-200"
                 disabled={loading}
               >
                 {loading ? (

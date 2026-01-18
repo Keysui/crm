@@ -99,64 +99,67 @@ export default function LeadsPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-3xl font-bold tracking-tight">Leads (CRM)</h2>
-        <p className="text-muted-foreground">
+    <div className="space-y-6 animate-fade-in">
+      <div className="space-y-1.5">
+        <h2 className="text-3xl font-bold tracking-tight text-[#111827] leading-tight">Leads (CRM)</h2>
+        <p className="text-[#6b7280] text-sm leading-relaxed">
           Manage your leads and customer relationships
         </p>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>All Leads</CardTitle>
-          <CardDescription>
-            View and manage all your leads in one place
-          </CardDescription>
+      <Card className="border border-gray-200/80 shadow-sm bg-white">
+        <CardHeader className="pb-4 pt-6 px-6 border-b border-gray-200/50">
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="text-lg font-semibold text-[#111827] leading-tight">All Leads</CardTitle>
+              <CardDescription className="text-xs text-[#6b7280] leading-relaxed mt-1">
+                View and manage all your leads in one place
+              </CardDescription>
+            </div>
+          </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Phone</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Sentiment</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
+              <TableRow className="border-b border-gray-200/80 hover:bg-transparent">
+                <TableHead className="text-[11px] font-semibold text-[#6b7280] uppercase tracking-[0.05em] h-11 px-6 text-left">Name</TableHead>
+                <TableHead className="text-[11px] font-semibold text-[#6b7280] uppercase tracking-[0.05em] h-11 px-6 text-left">Phone</TableHead>
+                <TableHead className="text-[11px] font-semibold text-[#6b7280] uppercase tracking-[0.05em] h-11 px-6 text-left">Status</TableHead>
+                <TableHead className="text-[11px] font-semibold text-[#6b7280] uppercase tracking-[0.05em] h-11 px-6 text-center">Sentiment</TableHead>
+                <TableHead className="text-[11px] font-semibold text-[#6b7280] uppercase tracking-[0.05em] h-11 px-6 text-left">Date</TableHead>
+                <TableHead className="text-[11px] font-semibold text-[#6b7280] uppercase tracking-[0.05em] h-11 px-6 text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {mockLeads.map((lead) => (
-                <TableRow key={lead.id}>
-                  <TableCell className="font-medium">{lead.name}</TableCell>
-                  <TableCell>{lead.phone}</TableCell>
-                  <TableCell>
+                <TableRow key={lead.id} className="border-b border-gray-200/50 hover:bg-[#f9fafb]/50 transition-colors duration-150">
+                  <TableCell className="font-medium text-sm text-[#111827] py-4 px-6">{lead.name}</TableCell>
+                  <TableCell className="text-sm text-[#6b7280] py-4 px-6 font-mono tracking-tight">{lead.phone}</TableCell>
+                  <TableCell className="py-4 px-6">
                     <Badge
                       variant="outline"
                       className={
                         lead.status === "booked"
-                          ? "bg-green-500/10 text-green-500 hover:bg-green-500/20 border-green-500/20"
+                          ? "bg-[#10b981]/10 text-[#10b981] hover:bg-[#10b981]/15 border-[#10b981]/30 font-medium text-[11px] px-2 py-0.5 h-5"
                           : lead.status === "new"
-                          ? "bg-yellow-500/10 text-yellow-500 hover:bg-yellow-500/20 border-yellow-500/20"
-                          : ""
+                          ? "bg-[#f59e0b]/10 text-[#f59e0b] hover:bg-[#f59e0b]/15 border-[#f59e0b]/30 font-medium text-[11px] px-2 py-0.5 h-5"
+                          : "font-medium text-[11px] px-2 py-0.5 h-5"
                       }
                     >
                       {lead.status.charAt(0).toUpperCase() + lead.status.slice(1)}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-2xl">
-                    {lead.sentiment || "😐"}
-                  </TableCell>
-                  <TableCell>{lead.date}</TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-lg text-center py-4 px-6 align-middle">{lead.sentiment || "😐"}</TableCell>
+                  <TableCell className="text-sm text-[#6b7280] py-4 px-6 font-mono text-[13px]">{lead.date}</TableCell>
+                  <TableCell className="text-right py-4 px-6">
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => handleViewDetails(lead)}
+                      className="h-7 px-2.5 text-xs font-medium text-[#6b7280] hover:text-[#111827] hover:bg-[#f3f4f6]"
                     >
-                      <Eye className="h-4 w-4 mr-2" />
-                      View Details
+                      <Eye className="h-3.5 w-3.5 mr-1.5 stroke-[2]" />
+                      View
                     </Button>
                   </TableCell>
                 </TableRow>

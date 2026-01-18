@@ -14,55 +14,73 @@ const data = [
 
 export function CallsVsLeadsChart() {
   return (
-    <Card className="border border-gray-200 hover:border-[#00C6FF] shadow-sm hover:shadow-lg hover-lift transition-all duration-300 bg-white">
-      <CardHeader className="pb-4">
-        <CardTitle className="text-xl font-semibold font-display text-[#1f2937]">Leads Over Time</CardTitle>
-        <CardDescription className="text-sm text-[#4b5563]">
+    <Card className="border border-gray-200/80 hover:border-[#00C6FF] shadow-sm hover:shadow-md transition-all duration-300 bg-white">
+      <CardHeader className="pb-5 pt-6 px-6">
+        <CardTitle className="text-xl font-semibold font-display text-[#1f2937] leading-tight mb-1.5">
+          Leads Over Time
+        </CardTitle>
+        <CardDescription className="text-sm text-[#6b7280] leading-relaxed">
           Comparison of inbound calls and leads generated over the last 6 months
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <ResponsiveContainer width="100%" height={350}>
-          <BarChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" opacity={0.3} />
+      <CardContent className="px-6 pb-6">
+        <ResponsiveContainer width="100%" height={360}>
+          <BarChart data={data} margin={{ top: 16, right: 16, left: 8, bottom: 8 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" opacity={0.4} vertical={false} />
             <XAxis 
               dataKey="name" 
               stroke="#9ca3af"
-              fontSize={12}
+              fontSize={11}
+              fontWeight={500}
               tickLine={false}
-              tick={{ fill: "#4b5563" }}
+              axisLine={false}
+              tick={{ fill: "#6b7280" }}
+              tickMargin={8}
             />
             <YAxis 
               stroke="#9ca3af"
-              fontSize={12}
+              fontSize={11}
+              fontWeight={500}
               tickLine={false}
-              tick={{ fill: "#4b5563" }}
+              axisLine={false}
+              tick={{ fill: "#6b7280" }}
+              tickMargin={8}
             />
             <Tooltip 
               contentStyle={{
                 backgroundColor: "#ffffff",
                 border: "1px solid #e5e7eb",
-                borderRadius: "12px",
-                boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)",
-                padding: "12px",
+                borderRadius: "10px",
+                boxShadow: "0 4px 12px -2px rgba(0, 0, 0, 0.08)",
+                padding: "10px 12px",
               }}
-              labelStyle={{ color: "#1f2937", fontWeight: 600 }}
+              labelStyle={{ 
+                color: "#1f2937", 
+                fontWeight: 600,
+                fontSize: "12px",
+                marginBottom: "4px"
+              }}
+              itemStyle={{
+                fontSize: "12px",
+                padding: "2px 0"
+              }}
             />
             <Legend 
-              wrapperStyle={{ paddingTop: "20px" }}
+              wrapperStyle={{ paddingTop: "24px", fontSize: "12px" }}
               iconType="circle"
+              iconSize={8}
             />
             <Bar 
               dataKey="inbound" 
               fill="#00C6FF" 
               name="Inbound Calls"
-              radius={[8, 8, 0, 0]}
+              radius={[6, 6, 0, 0]}
             />
             <Bar 
               dataKey="leads" 
               fill="#0072FF" 
               name="Leads Generated"
-              radius={[8, 8, 0, 0]}
+              radius={[6, 6, 0, 0]}
             />
           </BarChart>
         </ResponsiveContainer>

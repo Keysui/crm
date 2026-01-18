@@ -22,6 +22,7 @@ export function Breadcrumbs() {
       leads: "Leads",
       automations: "Automations",
       "ai-settings": "AI Settings",
+      "crm-integrations": "CRM Integrations",
       account: "Account",
     }
     return names[path] || path.charAt(0).toUpperCase() + path.slice(1)
@@ -34,9 +35,9 @@ export function Breadcrumbs() {
           <BreadcrumbLink asChild>
             <Link
               href="/dashboard"
-              className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors duration-200"
+              className="flex items-center gap-1.5 text-[#6b7280] hover:text-[#111827] transition-colors duration-200"
             >
-              <Home className="h-4 w-4" />
+              <Home className="h-4 w-4 stroke-[2]" />
             </Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
@@ -47,17 +48,17 @@ export function Breadcrumbs() {
 
           return (
             <div key={path} className="flex items-center">
-              <BreadcrumbSeparator className="text-muted-foreground/40" />
+              <BreadcrumbSeparator className="text-[#d1d5db]" />
               <BreadcrumbItem>
                 {isLast ? (
-                  <BreadcrumbPage className="font-semibold text-foreground">
+                  <BreadcrumbPage className="font-semibold text-[#111827] text-sm leading-tight">
                     {name}
                   </BreadcrumbPage>
                 ) : (
                   <BreadcrumbLink asChild>
                     <Link
                       href={href}
-                      className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+                      className="text-sm text-[#6b7280] hover:text-[#111827] transition-colors duration-200 leading-tight"
                     >
                       {name}
                     </Link>
