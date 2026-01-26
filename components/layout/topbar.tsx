@@ -80,11 +80,17 @@ export function Topbar() {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator className="bg-gray-200/80" />
-            <DropdownMenuItem className="cursor-pointer transition-colors px-3.5 py-2.5">
+            <DropdownMenuItem 
+              onClick={() => router.push("/dashboard/account")}
+              className="cursor-pointer transition-colors px-3.5 py-2.5"
+            >
               <User className="mr-2.5 h-4 w-4 text-[#6b7280] stroke-[2.5]" />
               <span className="text-sm">Profile</span>
             </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer transition-colors px-3.5 py-2.5">
+            <DropdownMenuItem 
+              onClick={() => router.push("/dashboard/account")}
+              className="cursor-pointer transition-colors px-3.5 py-2.5"
+            >
               <Settings className="mr-2.5 h-4 w-4 text-[#6b7280] stroke-[2.5]" />
               <span className="text-sm">Settings</span>
             </DropdownMenuItem>

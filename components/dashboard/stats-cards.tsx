@@ -83,11 +83,11 @@ export function StatsCards() {
               animationDelay: `${index * 50}ms`,
             }}
           >
-            <CardHeader className={`flex flex-row items-center space-y-0 pb-4 pt-5 relative z-10 ${(stat as any).titleMaxWidth ? 'px-4 gap-5' : 'px-5 gap-4'}`}>
-              <CardTitle className={`text-[11px] font-semibold text-[#6b7280] uppercase tracking-[0.05em] leading-tight ${(stat as any).titleMaxWidth ? 'min-w-0' : 'flex-1 min-w-0'} ${(stat as any).titleMaxWidth || 'max-w-[calc(100%-3rem)]'}`}>
+            <CardHeader className={`flex flex-row items-center justify-between space-y-0 pb-4 pt-5 relative z-10 ${(stat as any).titleMaxWidth ? 'px-4' : 'px-5'}`}>
+              <CardTitle className={`text-[11px] font-semibold text-[#6b7280] uppercase tracking-[0.05em] leading-tight flex-1 min-w-0 pr-2 ${(stat as any).titleMaxWidth || ''}`}>
                 {stat.title}
               </CardTitle>
-              <div className={`h-9 w-9 rounded-lg bg-gradient-to-br ${stat.color} flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300 shrink-0`}>
+              <div className={`h-9 w-9 rounded-lg bg-gradient-to-br ${stat.color} flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300 shrink-0 ml-auto`}>
                 <Icon className={`${stat.iconSize} text-white stroke-[2.5]`} />
               </div>
             </CardHeader>
