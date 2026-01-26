@@ -36,6 +36,130 @@ interface Contact {
 
 const STORAGE_KEY = "crm_contacts"
 
+// Test contacts for demonstration
+const getTestContacts = (): Contact[] => [
+  {
+    id: "test_1",
+    name: "John Smith",
+    email: "john.smith@techcorp.com",
+    phone: "+1 (555) 123-4567",
+    company: "TechCorp Inc.",
+    jobPosition: "CEO",
+    status: "Active",
+    notes: "Interested in enterprise plan. Follow up next week.",
+    plan: "Enterprise",
+    appointmentDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+    businessName: "TechCorp Solutions",
+    businessPosition: "Founder & CEO",
+    createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: "test_2",
+    name: "Sarah Johnson",
+    email: "sarah.j@designstudio.com",
+    phone: "+1 (555) 234-5678",
+    company: "Design Studio",
+    jobPosition: "Creative Director",
+    status: "Active",
+    notes: "Looking for basic plan. Very responsive.",
+    plan: "Basic",
+    appointmentDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
+    businessName: "Design Studio LLC",
+    businessPosition: "Creative Director",
+    createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: "test_3",
+    name: "Michael Chen",
+    email: "mchen@startup.io",
+    phone: "+1 (555) 345-6789",
+    company: "Startup.io",
+    jobPosition: "CTO",
+    status: "Pending",
+    notes: "Evaluating options. Needs custom solution.",
+    plan: "Pro",
+    appointmentDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),
+    businessName: "Startup.io Technologies",
+    businessPosition: "Chief Technology Officer",
+    createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: "test_4",
+    name: "Emily Rodriguez",
+    email: "emily.r@marketingpro.com",
+    phone: "+1 (555) 456-7890",
+    company: "Marketing Pro",
+    jobPosition: "Marketing Manager",
+    status: "Active",
+    notes: "Signed up for Pro plan. Very satisfied customer.",
+    plan: "Pro",
+    appointmentDate: "",
+    businessName: "Marketing Pro Agency",
+    businessPosition: "Senior Marketing Manager",
+    createdAt: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: "test_5",
+    name: "David Williams",
+    email: "david.w@consulting.com",
+    phone: "+1 (555) 567-8901",
+    company: "Williams Consulting",
+    jobPosition: "Principal Consultant",
+    status: "Inactive",
+    notes: "Previous customer. May return in Q2.",
+    plan: "Enterprise",
+    appointmentDate: "",
+    businessName: "Williams Consulting Group",
+    businessPosition: "Principal & Founder",
+    createdAt: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: "test_6",
+    name: "Lisa Anderson",
+    email: "lisa.a@retailstore.com",
+    phone: "+1 (555) 678-9012",
+    company: "Retail Store Chain",
+    jobPosition: "Operations Manager",
+    status: "Active",
+    notes: "Interested in bulk pricing for multiple locations.",
+    plan: "Enterprise",
+    appointmentDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
+    businessName: "Retail Store Chain Inc.",
+    businessPosition: "Operations Manager",
+    createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: "test_7",
+    name: "Robert Taylor",
+    email: "robert.t@finance.com",
+    phone: "+1 (555) 789-0123",
+    company: "Finance Solutions",
+    jobPosition: "CFO",
+    status: "Pending",
+    notes: "Budget approval pending. Follow up in 2 weeks.",
+    plan: "Pro",
+    appointmentDate: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000).toISOString(),
+    businessName: "Finance Solutions Ltd.",
+    businessPosition: "Chief Financial Officer",
+    createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: "test_8",
+    name: "Jennifer Martinez",
+    email: "jennifer.m@healthcare.com",
+    phone: "+1 (555) 890-1234",
+    company: "Healthcare Systems",
+    jobPosition: "IT Director",
+    status: "Active",
+    notes: "HIPAA compliance requirements discussed.",
+    plan: "Enterprise",
+    appointmentDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString(),
+    businessName: "Healthcare Systems Corp",
+    businessPosition: "IT Director",
+    createdAt: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+]
+
 export default function ContactsPage() {
   const [contacts, setContacts] = useState<Contact[]>([])
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
@@ -60,18 +184,26 @@ export default function ContactsPage() {
     }
   }
 
-  // Load contacts from localStorage on mount
+  // Load contacts from localStorage on mount, or use test data if empty
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY)
     if (stored) {
       try {
         const parsedContacts = JSON.parse(stored)
-        setContacts(parsedContacts)
-        contactsRef.current = parsedContacts
+        if (parsedContacts.length > 0) {
+          setContacts(parsedContacts)
+          contactsRef.current = parsedContacts
+          return
+        }
       } catch (error) {
         console.error("Failed to load contacts:", error)
       }
     }
+    // If no contacts exist, load test data
+    const testContacts = getTestContacts()
+    setContacts(testContacts)
+    contactsRef.current = testContacts
+    saveContacts(testContacts)
   }, [])
 
   // Save contacts to localStorage whenever they change
