@@ -12,6 +12,8 @@ import {
   Brain,
   User as UserIcon,
   Menu,
+  Inbox,
+  Calendar,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
@@ -24,6 +26,8 @@ const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: Home },
   { name: "Leads (CRM)", href: "/dashboard/leads", icon: Users },
   { name: "Contacts", href: "/dashboard/contacts", icon: Contact },
+  { name: "Inbox", href: "/dashboard/inbox", icon: Inbox },
+  { name: "Calendar", href: "/dashboard/calendar", icon: Calendar },
   { name: "Automations", href: "/dashboard/automations", icon: Zap },
   { name: "AI Settings", href: "/dashboard/ai-settings", icon: Brain },
   { name: "Account", href: "/dashboard/account", icon: UserIcon },

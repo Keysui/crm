@@ -38,6 +38,7 @@ import {
 import { toast } from "sonner"
 import { formatDistanceToNow } from "date-fns"
 import Link from "next/link"
+import { saveApiKey, deleteApiKey } from "@/app/actions/save-api-key"
 
 interface CrmIntegration {
   id: string
@@ -193,7 +194,7 @@ export default function CrmIntegrationsPage() {
     setIsDialogOpen(true)
   }
 
-  const handleConfirmConnect = () => {
+  const handleConfirmConnect = async () => {
     if (!selectedIntegration || !apiKey.trim()) {
       toast.error("Please enter an API key")
       return
@@ -202,7 +203,17 @@ export default function CrmIntegrationsPage() {
     setIsConnecting(true)
     toast.info(`Connecting to ${selectedIntegration.name}...`)
 
-    setTimeout(() => {
+    try {
+      // Save API key securely using server action
+      const result = await saveApiKey(selectedIntegration.id, apiKey)
+
+      if (!result.success) {
+        toast.error(result.error || "Failed to save API key")
+        setIsConnecting(false)
+        return
+      }
+
+      // Update UI to show connected status
       setIntegrations((prev) =>
         prev.map((integration) =>
           integration.id === selectedIntegration.id
@@ -213,7 +224,7 @@ export default function CrmIntegrationsPage() {
                 recordsSynced: 0,
                 errors: 0,
                 connectedAt: new Date().toISOString(),
-                apiKey: apiKey,
+                // Don't store the actual key in state - just mark as connected
               }
             : integration
         )
@@ -221,13 +232,28 @@ export default function CrmIntegrationsPage() {
       setIsDialogOpen(false)
       setIsConnecting(false)
       setApiKey("")
-      toast.success(`${selectedIntegration.name} connected successfully!`)
-    }, 2000)
+      toast.success(result.message || `${selectedIntegration.name} connected successfully!`)
+    } catch (error) {
+      console.error("Error saving API key:", error)
+      toast.error("An error occurred while saving the API key")
+      setIsConnecting(false)
+    }
   }
 
-  const handleDisconnect = (id: string) => {
+  const handleDisconnect = async (id: string) => {
     const integration = integrations.find((i) => i.id === id)
-    if (integration) {
+    if (!integration) return
+
+    try {
+      // Delete API key from database
+      const result = await deleteApiKey(id)
+
+      if (!result.success) {
+        toast.error(result.error || "Failed to disconnect")
+        return
+      }
+
+      // Update UI
       setIntegrations((prev) =>
         prev.map((i) =>
           i.id === id
@@ -236,12 +262,14 @@ export default function CrmIntegrationsPage() {
                 status: "disconnected" as const,
                 lastSynced: null,
                 connectedAt: null,
-                apiKey: undefined,
               }
             : i
         )
       )
-      toast.success(`${integration.name} disconnected`)
+      toast.success(result.message || `${integration.name} disconnected`)
+    } catch (error) {
+      console.error("Error disconnecting:", error)
+      toast.error("An error occurred while disconnecting")
     }
   }
 

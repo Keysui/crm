@@ -8,6 +8,13 @@ import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { 
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+import { ConnectionStatus } from "@/components/ai-settings/connection-status"
+import { 
   Webhook, 
   Copy, 
   Check, 
@@ -16,12 +23,15 @@ import {
   Phone,
   MessageSquare,
   Settings,
-  TestTube
+  TestTube,
+  Code
 } from "lucide-react"
 
 export default function AISettingsPage() {
   const [copied, setCopied] = useState<string | null>(null)
   const [testing, setTesting] = useState<string | null>(null)
+  const [vapiActive, setVapiActive] = useState(true) // TODO: Fetch from API
+  const [twilioActive, setTwilioActive] = useState(true) // TODO: Fetch from API
 
   // Get the current domain (in production, this would be from env)
   const baseUrl = typeof window !== "undefined" 
@@ -52,6 +62,20 @@ export default function AISettingsPage() {
     }
   }
 
+  const handleTestCall = () => {
+    alert("Test call functionality will be implemented soon. This will trigger a test call to verify your AI voice agent is working correctly.")
+  }
+
+  const handleConnectVapi = () => {
+    // TODO: Implement connection flow
+    alert("Vapi connection flow will be implemented soon.")
+  }
+
+  const handleConnectTwilio = () => {
+    // TODO: Implement connection flow
+    alert("Twilio connection flow will be implemented soon.")
+  }
+
   return (
     <div className="space-y-6">
       <div>
@@ -61,135 +85,23 @@ export default function AISettingsPage() {
         </p>
       </div>
 
-      {/* Webhook Configuration */}
+      {/* Connection Status Cards */}
+      <div className="space-y-4">
+        <ConnectionStatus
+          type="vapi"
+          isActive={vapiActive}
+          onConnect={handleConnectVapi}
+          onTestCall={handleTestCall}
+        />
+        <ConnectionStatus
+          type="twilio"
+          isActive={twilioActive}
+          onConnect={handleConnectTwilio}
+        />
+      </div>
+
+      {/* Cards Section */}
       <div className="space-y-6">
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <Webhook className="h-5 w-5" />
-              <CardTitle>Webhook Configuration</CardTitle>
-            </div>
-            <CardDescription>
-              Connect your Vapi and Twilio accounts by configuring webhooks
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            {/* Vapi Webhook */}
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Phone className="h-4 w-4 text-primary" />
-                  <Label className="text-base font-semibold">Vapi Webhook</Label>
-                  <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500/20">
-                    Active
-                  </Badge>
-                </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleTestWebhook("vapi")}
-                  disabled={testing === "vapi"}
-                >
-                  <TestTube className="h-4 w-4 mr-2" />
-                  {testing === "vapi" ? "Testing..." : "Test"}
-                </Button>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="vapi-webhook">Webhook URL</Label>
-                <div className="flex gap-2">
-                  <Input
-                    id="vapi-webhook"
-                    value={vapiWebhookUrl}
-                    readOnly
-                    className="font-mono text-sm"
-                  />
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => handleCopy(vapiWebhookUrl, "vapi")}
-                  >
-                    {copied === "vapi" ? (
-                      <Check className="h-4 w-4 text-green-500" />
-                    ) : (
-                      <Copy className="h-4 w-4" />
-                    )}
-                  </Button>
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  Configure this URL in your Vapi dashboard under Webhooks → call.ended events
-                </p>
-              </div>
-              <div className="bg-muted rounded-lg p-4 space-y-2">
-                <p className="text-sm font-medium">What this webhook does:</p>
-                <ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside">
-                  <li>Receives call.ended events from Vapi</li>
-                  <li>Creates CallLog entries for all calls</li>
-                  <li>Automatically creates/updates Leads when calls indicate interest</li>
-                  <li>Extracts sentiment, summary, and recording URLs</li>
-                </ul>
-              </div>
-            </div>
-
-            <Separator />
-
-            {/* Twilio Webhook */}
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <MessageSquare className="h-4 w-4 text-primary" />
-                  <Label className="text-base font-semibold">Twilio Webhook</Label>
-                  <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500/20">
-                    Active
-                  </Badge>
-                </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleTestWebhook("twilio")}
-                  disabled={testing === "twilio"}
-                >
-                  <TestTube className="h-4 w-4 mr-2" />
-                  {testing === "twilio" ? "Testing..." : "Test"}
-                </Button>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="twilio-webhook">Webhook URL</Label>
-                <div className="flex gap-2">
-                  <Input
-                    id="twilio-webhook"
-                    value={twilioWebhookUrl}
-                    readOnly
-                    className="font-mono text-sm"
-                  />
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => handleCopy(twilioWebhookUrl, "twilio")}
-                  >
-                    {copied === "twilio" ? (
-                      <Check className="h-4 w-4 text-green-500" />
-                    ) : (
-                      <Copy className="h-4 w-4" />
-                    )}
-                  </Button>
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  Configure this URL in your Twilio Console under Phone Numbers → Webhooks
-                </p>
-              </div>
-              <div className="bg-muted rounded-lg p-4 space-y-2">
-                <p className="text-sm font-medium">What this webhook does:</p>
-                <ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside">
-                  <li>Receives incoming SMS messages</li>
-                  <li>Receives call status updates</li>
-                  <li>Creates/updates Leads from SMS conversations</li>
-                  <li>Logs all automation actions</li>
-                </ul>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
         {/* Setup Instructions */}
         <Card>
           <CardHeader>
@@ -317,6 +229,143 @@ export default function AISettingsPage() {
                 Update the webhook URLs above with your ngrok URL.
               </p>
             </div>
+          </CardContent>
+        </Card>
+
+        {/* Advanced Developer Settings */}
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Code className="h-5 w-5" />
+              <CardTitle>Advanced Developer Settings</CardTitle>
+            </div>
+            <CardDescription>
+              Technical webhook URLs and configuration details
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Accordion type="single">
+              <AccordionItem value="webhook-urls">
+                <AccordionTrigger className="text-base font-semibold">
+                  Webhook URLs & Configuration
+                </AccordionTrigger>
+                <AccordionContent className="space-y-6 pt-4">
+                  {/* Vapi Webhook */}
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Phone className="h-4 w-4 text-primary" />
+                        <Label className="text-base font-semibold">Vapi Webhook</Label>
+                        <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500/20">
+                          Active
+                        </Badge>
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleTestWebhook("vapi")}
+                        disabled={testing === "vapi"}
+                      >
+                        <TestTube className="h-4 w-4 mr-2" />
+                        {testing === "vapi" ? "Testing..." : "Test"}
+                      </Button>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="vapi-webhook">Webhook URL</Label>
+                      <div className="flex gap-2">
+                        <Input
+                          id="vapi-webhook"
+                          value={vapiWebhookUrl}
+                          readOnly
+                          className="font-mono text-sm"
+                        />
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          onClick={() => handleCopy(vapiWebhookUrl, "vapi")}
+                        >
+                          {copied === "vapi" ? (
+                            <Check className="h-4 w-4 text-green-500" />
+                          ) : (
+                            <Copy className="h-4 w-4" />
+                          )}
+                        </Button>
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        Configure this URL in your Vapi dashboard under Webhooks → call.ended events
+                      </p>
+                    </div>
+                    <div className="bg-muted rounded-lg p-4 space-y-2">
+                      <p className="text-sm font-medium">What this webhook does:</p>
+                      <ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside">
+                        <li>Receives call.ended events from Vapi</li>
+                        <li>Creates CallLog entries for all calls</li>
+                        <li>Automatically creates/updates Leads when calls indicate interest</li>
+                        <li>Extracts sentiment, summary, and recording URLs</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  {/* Twilio Webhook */}
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <MessageSquare className="h-4 w-4 text-primary" />
+                        <Label className="text-base font-semibold">Twilio Webhook</Label>
+                        <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500/20">
+                          Active
+                        </Badge>
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleTestWebhook("twilio")}
+                        disabled={testing === "twilio"}
+                      >
+                        <TestTube className="h-4 w-4 mr-2" />
+                        {testing === "twilio" ? "Testing..." : "Test"}
+                      </Button>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="twilio-webhook">Webhook URL</Label>
+                      <div className="flex gap-2">
+                        <Input
+                          id="twilio-webhook"
+                          value={twilioWebhookUrl}
+                          readOnly
+                          className="font-mono text-sm"
+                        />
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          onClick={() => handleCopy(twilioWebhookUrl, "twilio")}
+                        >
+                          {copied === "twilio" ? (
+                            <Check className="h-4 w-4 text-green-500" />
+                          ) : (
+                            <Copy className="h-4 w-4" />
+                          )}
+                        </Button>
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        Configure this URL in your Twilio Console under Phone Numbers → Webhooks
+                      </p>
+                    </div>
+                    <div className="bg-muted rounded-lg p-4 space-y-2">
+                      <p className="text-sm font-medium">What this webhook does:</p>
+                      <ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside">
+                        <li>Receives incoming SMS messages</li>
+                        <li>Receives call status updates</li>
+                        <li>Creates/updates Leads from SMS conversations</li>
+                        <li>Logs all automation actions</li>
+                      </ul>
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </CardContent>
         </Card>
       </div>
